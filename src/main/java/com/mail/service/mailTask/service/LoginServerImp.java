@@ -1,4 +1,4 @@
-package service;
+package com.mail.service.mailTask.service;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mail.service.mailTask.entity.UserInfo;
+import com.mail.service.mailTask.mycofig.EmailService;
 import com.mail.service.mailTask.repo.LoginRepo;
 @Service
 public class LoginServerImp implements LoginServer {
@@ -15,6 +16,9 @@ public class LoginServerImp implements LoginServer {
    LoginRepo repo;
    @Autowired
    BCryptPasswordEncoder bCrypt;
+
+   @Autowired
+   private EmailService emailService;
 	@Override
 	public UserInfo save(UserInfo us) {
 		if(repo.existsById(us.getId()))
@@ -30,9 +34,18 @@ public class LoginServerImp implements LoginServer {
 		return repo.findAll();
 	}
 	@Override
-	public UserInfo getUserById(String email) {
+	public UserInfo getUserById(int email) {
+		//emailService.sendMail("iftekhara226@gmail.com", "Happy Coding", "Email sent with demo application");
+        
+      //  emailService.sendPreConfiguredMail("Happy Coding");
+	 return getAllUser().stream().filter(user -> user.getId() == email).findAny().orElse(null);
+		//emailService.sendMail("iftekhara226@gmail.com", "Happy Coding", "Email sent with demo application");
+        
+	}
+	
+	public UserInfo getByUserName(String email) {
 		
-		return getAllUser().stream().filter(user -> user.getComEail().equals(email)).findAny().orElse(null);
+		return getAllUser().stream().filter(user -> user.getWebEmail().equals(email)).findAny().orElse(null);
 	}
 
 }

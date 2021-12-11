@@ -1,4 +1,4 @@
-package service;
+package com.mail.service.mailTask.service;
 
 import java.util.List;
 
@@ -7,5 +7,5 @@ import com.mail.service.mailTask.entity.UserInfo;
 public interface LoginServer {
 	public UserInfo save(UserInfo us);
 	public List<UserInfo> getAllUser();
-	public UserInfo getUserById(String email);
+	public UserInfo getUserById(int email);
 }

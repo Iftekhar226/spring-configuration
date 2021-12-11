@@ -21,7 +21,7 @@ public class UserInfo {
 	private int id;
 	private String name;
 	private String realEail;
-	private String comEail;
+	private String webEmail;
 	private String password;
 	private String role;
 
