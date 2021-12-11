@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.mail.service.mailTask.entity.UserInfo;
 @Repository
 public interface LoginRepo extends JpaRepository<UserInfo, Integer> {
-	public UserInfo  findByWebEmail(String mail);
+	public UserInfo  findByRealEmail(String mail);
 }

@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 import com.mail.service.mailTask.entity.UserInfo;
 import com.mail.service.mailTask.mycofig.EmailService;
 import com.mail.service.mailTask.repo.LoginRepo;
+import com.mail.service.mailTask.util.OTPUtil;
 @Service
 public class LoginServerImp implements LoginServer {
    @Autowired
    LoginRepo repo;
    @Autowired
    BCryptPasswordEncoder bCrypt;
-
-   @Autowired
-   private EmailService emailService;
+@Autowired
+ private OTPUtil util;
+   
 	@Override
 	public UserInfo save(UserInfo us) {
 		if(repo.existsById(us.getId()))
@@ -28,6 +29,22 @@ public class LoginServerImp implements LoginServer {
 		}else 
 			throw new UsernameNotFoundException("no user Id found");		
 
+	}
+	
+	public UserInfo register(UserInfo us) {
+		return repo.save(us);
+	}
+	public String getOtp(String email)
+	{
+		UserInfo user = repo.findByRealEmail(email);
+		if(user != null) {
+//			  this.repo.delete(user);
+				String pin =util.getOTP(repo.findByRealEmail(email).getId(),user);
+			
+			  
+				return "success";
+		}
+		return "fails";
 	}
 	@Override
 	public List<UserInfo> getAllUser() {
