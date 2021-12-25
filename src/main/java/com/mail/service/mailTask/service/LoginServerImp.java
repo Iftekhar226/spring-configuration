@@ -14,12 +14,13 @@ import com.mail.service.mailTask.util.OTPUtil;
 @Service
 public class LoginServerImp implements LoginServer {
    @Autowired
-   LoginRepo repo;
+   private LoginRepo repo;
    @Autowired
    BCryptPasswordEncoder bCrypt;
 @Autowired
  private OTPUtil util;
-   
+   @Autowired
+   private EmailService emailService;
 	@Override
 	public UserInfo save(UserInfo us) {
 		if(repo.existsById(us.getId()))
@@ -38,10 +39,10 @@ public class LoginServerImp implements LoginServer {
 	{
 		UserInfo user = repo.findByRealEmail(email);
 		if(user != null) {
-//			  this.repo.delete(user);
-				String pin =util.getOTP(repo.findByRealEmail(email).getId(),user);
 			
-			  
+				String pin = util.getOTP(user.getId(),user);
+				emailService.sendMail("iftekhara226@gmail.com", "DO NOT SHARE", "your  secret otp number is "+pin);
+			
 				return "success";
 		}
 		return "fails";

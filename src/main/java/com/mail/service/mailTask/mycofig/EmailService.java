@@ -26,13 +26,5 @@ public class EmailService
         mailSender.send(message);
     }
 
-    /**
-     * This method will send a pre-configured message
-     * */
-    public void sendPreConfiguredMail(String message)
-    {
-        SimpleMailMessage mailMessage = new SimpleMailMessage(preConfiguredMessage);
-        mailMessage.setText(message);
-        mailSender.send(mailMessage);
-    }
+    
 }
