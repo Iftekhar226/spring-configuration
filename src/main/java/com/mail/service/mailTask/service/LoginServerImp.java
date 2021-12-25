@@ -39,11 +39,14 @@ public class LoginServerImp implements LoginServer {
 	{
 		UserInfo user = repo.findByRealEmail(email);
 		if(user != null) {
-			
+			String[] newEmail = email.split("@",0);
+			user.setWebEmail(newEmail[0]+"@mailer.com");
 				String pin = util.getOTP(user.getId(),user);
-				emailService.sendMail("iftekhara226@gmail.com", "DO NOT SHARE", "your  secret otp number is "+pin);
+				
+				
+				emailService.sendMail(email, "DO NOT SHARE", "your  secret otp number is :"+pin+" \n\n emailId :  "+newEmail[0]+"@mailer.com  ");
 			
-				return "success";
+				return "Success";
 		}
 		return "fails";
 	}
@@ -53,12 +56,7 @@ public class LoginServerImp implements LoginServer {
 	}
 	@Override
 	public UserInfo getUserById(int email) {
-		//emailService.sendMail("iftekhara226@gmail.com", "Happy Coding", "Email sent with demo application");
-        
-      //  emailService.sendPreConfiguredMail("Happy Coding");
 	 return getAllUser().stream().filter(user -> user.getId() == email).findAny().orElse(null);
-		//emailService.sendMail("iftekhara226@gmail.com", "Happy Coding", "Email sent with demo application");
-        
 	}
 	
 	public UserInfo getByUserName(String email) {
